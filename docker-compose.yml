@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  secure-api:
+    build:
+      context: ./secure-api
+    ports:
+      - '5001:5001'
+    volumes:
+      - ./secure-api:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5001
+      - DATABASE_URL=sqlite:///users.db
+
+  insecure-api:
+    build:
+      context: ./insecure-api
+    ports:
+      - '5002:5002'
+    volumes:
+      - ./insecure-api:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5002
+      - DATABASE_URL=sqlite:///users_insecure.db
